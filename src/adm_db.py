@@ -1,11 +1,18 @@
 import sqlite3 as sql
-from config import db_path
+from .config import db_path
 
 def db(*commands: str):
     with sql.connect(db_path) as connection:
         cursor = connection.cursor()
         for command in commands:
             cursor.execute(command)
+
+def get_product(product_id: int):
+    with sql.connect(db_path) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM products WHERE product_id = ?", (product_id,))
+        result = cursor.fetchone()
+        return list(result).pop(0) if result else None
 
 def start_db():
     db("""
@@ -18,7 +25,7 @@ def start_db():
             product_image_path TEXT NOT NULL CHECK (LENGTH(product_image_path) <= 255)
         )
        """)
-
+   
 def insert_new_product(product_name: str,
                        product_price: int,
                        product_stock: int,
@@ -36,7 +43,7 @@ def update_product(product_id: int,
                    *updates: tuple[str, any]):
     #              updates=(update_field_name, new_value)
     # 1st example: updates=("product_price", 49.99)
-    # 2ndexample:  updates=("product_name", "Cool Shirt #123")
+    # 2nd example:  updates=("product_name", "Cool Shirt #123")
     
     for update in updates:
         new_value = None

@@ -14,6 +14,13 @@ def get_product(product_id: int):
         result = cursor.fetchone()
         return list(result).pop(0) if result else None
 
+def get_products():
+    with sql.connect(db_path) as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM products")
+        results = cursor.fetchall()
+        return [list(row) for row in results] if results else []
+
 def start_db():
     db("""
         CREATE TABLE IF NOT EXISTS products (

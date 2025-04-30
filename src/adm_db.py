@@ -58,7 +58,3 @@ def update_product(product_id: int,
            SET {update[0]} = {new_value}
            WHERE product_id = {product_id}
            """)
-
-# test suite
-if __name__ == "__main__":
-    update_product(123, ("product_price", 49.99), ("product_name", "Cool Shirt #123"))

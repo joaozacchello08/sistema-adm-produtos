@@ -1,7 +1,7 @@
 import sqlite3 as sql
-from ..main import db_path
+from config import db_path
 
-def db(*commands):
+def db(*commands: str):
     with sql.connect(db_path) as connection:
         cursor = connection.cursor()
         for command in commands:
@@ -32,14 +32,26 @@ def insert_new_product(product_name: str,
 def remove_product(product_id: int):
     db(f"DELETE FROM products WHERE product_id = {product_id}")
 
-def single_update_product(product_id, 
-                          update: tuple[str, any]):
-               #          update=(update_field_name, new_value)
-               # example: update=("product_price", 49.99)
-    new_value = 
+def update_product(product_id: int, 
+                   *updates: tuple[str, any]):
+    #              updates=(update_field_name, new_value)
+    # 1st example: updates=("product_price", 49.99)
+    # 2ndexample:  updates=("product_name", "Cool Shirt #123")
     
-    db(f"""
-        UPDATE products 
-        SET {update[0]} = 
-        WHERE product_id = '{product_id}'
-    """)
+    for update in updates:
+        new_value = None
+
+        if type(update[1]).__name__ == "str":
+            new_value = f"'{update[1]}'"
+        else: 
+            new_value = update[1]
+
+        db(f"""
+           UPDATE products
+           SET {update[0]} = {new_value}
+           WHERE product_id = {product_id}
+           """)
+
+# test suite
+if __name__ == "__main__":
+    update_product(123, ("product_price", 49.99), ("product_name", "Cool Shirt #123"))

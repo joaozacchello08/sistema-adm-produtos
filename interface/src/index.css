@@ -47,32 +47,28 @@
 
 .app-content .product {
   width: 200px;
-  height: 300px;
   padding: 20px;
   text-align: center;
   line-height: 1.6;
   border: 1px solid #000;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  position: relative; /* Adicionado para permitir o posicionamento dos ícones */
+  justify-content: flex-start; /* Alinhar os itens ao início para o texto fluir */
+  align-items: center; /* Centralizar os itens horizontalmente */
+  position: relative; /* Contexto para posicionamento absoluto */
 }
 
 .app-content .product img {
   max-height: 120px;
   max-width: 160px;
+  margin-bottom: 10px; /* Adicionar espaço abaixo da imagem */
 }
 
-/* Estilos para os ícones de editar e vender */
-.product-actions {
+/* Estilos para os ícones */
+.edit-button {
   position: absolute;
   top: 5px;
   left: 5px;
-  display: flex;
-  gap: 10px;
-}
-
-.edit-button, .sell-button {
   font-size: 18px;
   text-decoration: none;
   color: black;
@@ -80,11 +76,50 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 2px 6px;
+  z-index: 10; /* Garante que o ícone fique acima de outros elementos */
+}
+
+.sell-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 6px;
+  z-index: 10; /* Garante que o ícone fique acima de outros elementos */
+}
+
+.delete-button {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 6px;
+  z-index: 10; /* Garante que o ícone fique acima de outros elementos */
 }
 
 .edit-button:hover,
-.sell-button:hover {
+.sell-button:hover,
+.delete-button:hover {
   background-color: #f0f0f0;
+}
+
+.product p {
+  margin: 5px 0; /* Adicionar um pouco de espaço entre os parágrafos */
+  font-size: 14px;
+}
+
+.product p:last-child {
+  margin-bottom: 0; /* Remover a margem inferior do último parágrafo */
 }
 
 .product-form {

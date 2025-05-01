@@ -20,6 +20,7 @@ export default function App() {
           <div className="product-actions">
             <Link to={`/editar_produto/${id}`} className="edit-button" title="Editar produto">✏️</Link>
             <Link to={`/vender_produto/${id}`} className="sell-button" title="Vender produto">✔️</Link>
+            <Link to={`/excluir_produto/${id}`} className="delete-button" title="Excluir produto">❌</Link>
           </div>
 
           <img src={image} alt={name_} />

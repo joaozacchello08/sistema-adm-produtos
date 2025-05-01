@@ -12,7 +12,7 @@ def get_product(product_id: int):
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM products WHERE product_id = ?", (product_id,))
         result = cursor.fetchone()
-        return list(result).pop(0) if result else None
+        return list(result) if result else None
 
 def get_products():
     with sql.connect(db_path) as connection:

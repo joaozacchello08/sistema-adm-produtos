@@ -1,4 +1,8 @@
-from src.adm_db import start_db, insert_new_product, remove_product, update_product, get_product, get_products
+from src.adm_db import (
+    start_db, insert_new_product, remove_product, update_product,
+    get_product, get_products, sell_product, load_sales_history
+)
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 
@@ -65,16 +69,20 @@ def remover_produto(id: int):
 def vender_produto(id: int):
     body = request.get_json()
 
-    # ...
+    quantidade = body.get('quantidade', 1)  # Default = 1 se não especificado
 
-    return jsonify({ "produtoVendido": body['product'] })
+    try:
+        sell_product([(id, quantidade)])
+        return jsonify({ "produtoVendido": { "id": id, "quantidade": quantidade } })
+    except ValueError as e:
+        return jsonify({ "erro": str(e) }), 400
 
 # get all vendas
 @app.route('/vendas', methods=["GET"])
 @cross_origin()
 def get_vendas():
-    # ...
+    historico = load_sales_history()
+    return jsonify(historico)
 
-    return jsonify({})
 
 app.run(port=8080, host='localhost', debug=True)

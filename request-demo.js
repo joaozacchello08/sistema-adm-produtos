@@ -13,9 +13,6 @@ function get_products () {
 
 // POST
 function add_product () {
-    const fs = require('fs')
-    const imagem = fs.readFileSync('./test.txt', 'utf-8')
-    
     fetch("http://localhost:8080/produtos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +22,7 @@ function add_product () {
                 123,          //product_price
                 90,           //product_stock,
                 "12345678",   //product_barcode
-                imagem           //product_image_path
+                '/'           //product_image_path
             ]
         })
     })
@@ -85,3 +82,37 @@ function delete_product (id) {
         .then(response => response.text())
         .then(data => console.log(data))
 }
+
+// POST venda de 1 unidade (padrão)
+function sell_product_default(id) {
+    fetch(`http://localhost:8080/vender/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => console.log("Venda realizada:", data))
+    .catch(err => console.error("Erro ao vender produto:", err))
+}
+
+// POST venda com quantidade específica
+function sell_product_with_quantity(id, quantidade) {
+    fetch(`http://localhost:8080/vender/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantidade })
+    })
+    .then(response => response.json())
+    .then(data => console.log("Venda realizada:", data))
+    .catch(err => console.error("Erro ao vender produto:", err))
+}
+
+// GET todas as vendas
+function get_sales_history() {
+    fetch("http://localhost:8080/vendas")
+        .then(response => response.json())
+        .then(data => console.log("Histórico de vendas:", data))
+        .catch(err => console.error("Erro ao obter histórico de vendas:", err))
+}
+
+

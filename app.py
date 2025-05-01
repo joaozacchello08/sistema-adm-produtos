@@ -45,6 +45,7 @@ def atualizar_produto(id: int):
 
     return jsonify({ "produto_atualizado": updated_product })
 
+# deletar produto
 @app.route('/produtos/<int:id>', methods=["DELETE"])
 def remover_produto(id: int):
     remove_product(id)

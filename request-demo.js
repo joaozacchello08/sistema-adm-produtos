@@ -29,6 +29,34 @@ function add_product () {
         .then(data => console.log(data))
 }
 
+function add_products() {
+    const products = [
+        ["Smartphone X1", 1999.99, 50, "0012345678901", "/images/smartphone-x1.jpg"],
+        ["Notebook Pro 15", 4599.00, 30, "0023456789012", "/images/notebook-pro-15.jpg"],
+        ["Smartwatch Fit", 899.90, 100, "0034567890123", "/images/smartwatch-fit.jpg"],
+        ["Headphones Bass+", 299.00, 75, "0045678901234", "/images/headphones-bass.jpg"],
+        ["TV 50\" 4K UHD", 2599.99, 20, "0056789012345", "/images/tv-50-4k.jpg"],
+        ["Câmera DSLR 3000", 3499.50, 15, "0067890123456", "/images/camera-dslr.jpg"],
+        ["Tablet Max 10", 1599.00, 40, "0078901234567", "/images/tablet-max.jpg"],
+        ["Console GameStation 5", 3999.90, 25, "0089012345678", "/images/console-gamestation.jpg"],
+        ["Monitor 27\" UltraWide", 1399.99, 35, "0090123456789", "/images/monitor-ultrawide.jpg"],
+        ["Teclado Mecânico RGB", 499.00, 60, "0101234567890", "/images/teclado-rgb.jpg"]
+    ]
+
+    products.forEach(product => {
+        fetch("http://localhost:8080/produtos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ product })
+        })
+        .then(response => response.text())
+        .then(data => console.log("Produto adicionado:", data))
+        .catch(err => console.error("Erro ao adicionar produto:", err))
+    })
+}
+
 // PATCH
 function patch_product (id) {
     fetch(`http://localhost:8080/produtos/${id}`, {

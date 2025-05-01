@@ -12,21 +12,59 @@ export default function NewProduct() {
     const file = e.target.files[0]
     if (file) {
       const reader = new FileReader()
-      
+
       reader.onloadend = () => {
         setImage(reader.result)
       }
-      
+
       reader.readAsDataURL(file)
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    //PAROU AQUI 8======D
-    //REGISTRAR O PRODUTO (FAZER A REQUEST)
-    //CRIAR ROTA PARA SALVAR O BLOB DA IMAGEM
+
+    const formattedPrice = parseFloat(parseFloat(price).toFixed(2))
+    const formattedStock = parseInt(stock, 10)
+
+    if (isNaN(formattedPrice) || isNaN(formattedStock)) {
+      alert("Preço deve ser um número válido com até 2 casas decimais e estoque deve ser um número inteiro.")
+      return
+    }
+
+    const productData = {
+      product: [
+        productName,
+        formattedPrice,
+        formattedStock,
+        barcode,
+        image
+      ]
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/produtos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(productData)
+      })
+
+      const result = await response.json()
+      console.log("Produto adicionado:", result)
+      alert("Produto cadastrado com sucesso!")
+
+      // Clear form
+      setProductName("")
+      setPrice("")
+      setStock("")
+      setBarcode("")
+      setImage("")
+    } catch (error) {
+      console.error("Erro ao adicionar produto:", error)
+      alert("Erro ao cadastrar o produto.")
+    }
   }
 
   return (
@@ -41,6 +79,7 @@ export default function NewProduct() {
             placeholder="Nome do produto..."
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
+            required
           />
         </label>
 
@@ -49,8 +88,11 @@ export default function NewProduct() {
           <input
             type="number"
             placeholder="Preço do produto..."
+            step="0.01"
+            min="0"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
           />
         </label>
 
@@ -58,11 +100,12 @@ export default function NewProduct() {
           Estoque:
           <input
             type="number"
-            step={1}
-            min={0}
+            step="1"
+            min="0"
             placeholder="Estoque do produto..."
             value={stock}
             onChange={(e) => setStock(e.target.value)}
+            required
           />
         </label>
 
@@ -73,6 +116,7 @@ export default function NewProduct() {
             placeholder="Código de barras do produto..."
             value={barcode}
             onChange={(e) => setBarcode(e.target.value)}
+            required
           />
         </label>
 

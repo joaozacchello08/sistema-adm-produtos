@@ -31,6 +31,15 @@ def start_db():
             product_barcode TEXT NOT NULL UNIQUE CHECK (LENGTH(product_barcode) BETWEEN 8 AND 14),
             product_image_path TEXT NOT NULL
         )
+       """,
+       """
+        CREATE TABLE IF NOT EXISTS vendas (
+            venda_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            product_id INTEGER NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            productAmountSell INTEGER NOT NULL CHECK (productAmountSell > 0),
+            FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE ON UPDATE CASCADE
+        )
        """)
    
 def insert_new_product(product_name: str,
@@ -65,3 +74,13 @@ def update_product(product_id: int,
            SET {update[0]} = {new_value}
            WHERE product_id = {product_id}
            """)
+
+def sell_product(id: int, ):
+    
+
+    pass
+
+def load_sales_history():
+    # ...
+    
+    pass

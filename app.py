@@ -59,4 +59,22 @@ def remover_produto(id: int):
     remove_product(id)
     return jsonify({ "Produto": "removido." })
 
+# vender produto
+@app.route('/vender/<int:id>', methods=["POST"])
+@cross_origin()
+def vender_produto(id: int):
+    body = request.get_json()
+
+    # ...
+
+    return jsonify({ "produtoVendido": body['product'] })
+
+# get all vendas
+@app.route('/vendas', methods=["GET"])
+@cross_origin()
+def get_vendas():
+    # ...
+
+    return jsonify({})
+
 app.run(port=8080, host='localhost', debug=True)

@@ -13,15 +13,19 @@ function get_products () {
 
 // POST
 function add_product () {
+    const fs = require('fs')
+    const imagem = fs.readFileSync('./test.txt', 'utf-8')
+    
     fetch("http://localhost:8080/produtos", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             product: [
                 "Product #1", //product_name
                 123,          //product_price
                 90,           //product_stock,
                 "12345678",   //product_barcode
-                "/"           //product_image_path
+                imagem           //product_image_path
             ]
         })
     })

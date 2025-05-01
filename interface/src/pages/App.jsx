@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Header from '../components/Header'
 
 export default function App() {
   const [products, setProducts] = useState([])
@@ -12,22 +12,16 @@ export default function App() {
 
   return (
     <div className="app-content">
-      <header className="app-header">
-        <nav>
-          <ul>
-            <li><a href="#">DASHBOARD</a></li>
-            <li><Link to="/adicionar_produto">ADICIONAR PRODUTO</Link></li>
-          </ul>
-        </nav>
-      </header>
+      <Header />
 
       {products.map(([id, name_, price, stock, barcode, image]) => (
-        <div key={id} id={id} className="product">
+        <div key={id} className="product">
           <img src={image} />
           <p>{name_}</p>
           <p>Preço: R${price}</p>
           <p>Estoque: {stock}</p>
           <p>Código de Barras: {barcode}</p>
+          <p>Id: {id}</p>
         </div>
       ))}
     </div>

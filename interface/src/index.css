@@ -14,26 +14,34 @@
   padding: 50px;
 }
 
-.app-content .app-header {
+.newProduct-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 50px;
+}
+
+.header {
   width: 100%;
   background-color: #222;
   padding: 20px 50px;
   color: white;
 }
 
-.app-content .app-header ul {
+.header ul {
   display: flex;
   gap: 30px;
   list-style: none;
 }
 
-.app-content .app-header li a {
+.header li a {
   color: white;
   text-decoration: none;
   font-size: 18px;
 }
 
-.app-content .app-header li a:hover {
+.header li a:hover {
   text-decoration: underline;
 }
 
@@ -49,3 +57,51 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.app-content .product img {
+  max-height: 120px;
+  max-width: 160px;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.product-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+
+.product-form input {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.product-form input[type="file"] {
+  padding: 5px 0;
+}
+
+.product-form button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #222;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.product-form button:hover {
+  background-color: #444;
+}
+

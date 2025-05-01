@@ -29,7 +29,7 @@ def start_db():
             product_price REAL NOT NULL CHECK (product_price >= 0),
             product_stock INTEGER NOT NULL CHECK (product_stock >= 0),
             product_barcode TEXT NOT NULL UNIQUE CHECK (LENGTH(product_barcode) BETWEEN 8 AND 14),
-            product_image_path TEXT NOT NULL CHECK (LENGTH(product_image_path) <= 255)
+            product_image_path TEXT NOT NULL
         )
        """)
    

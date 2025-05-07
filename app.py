@@ -1,6 +1,6 @@
 from src.adm_db import (
     start_db, insert_new_product, remove_product, update_product,
-    get_product, get_products, sell_product, load_sales_history
+    get_product, get_products
 )
 
 from flask import Flask, jsonify, request
@@ -40,7 +40,7 @@ def criar_produto():
     endereco_imagem = produto[4]
 
     insert_new_product(nome, preco, estoque, codigo_de_barra, endereco_imagem)
-
+    
     return jsonify({ "produto_adicionado": body })
 
 # atualizar produto
@@ -64,25 +64,24 @@ def remover_produto(id: int):
     return jsonify({ "Produto": "removido." })
 
 # vender produto
-@app.route('/vender/<int:id>', methods=["POST"])
-@cross_origin()
-def vender_produto(id: int):
-    body = request.get_json()
+# @app.route('/vender/<int:id>', methods=["POST"])
+# @cross_origin()
+# def vender_produto(id: int):
+#     body = request.get_json()
 
-    quantidade = body.get('quantidade', 1)  # Default = 1 se não especificado
+#     quantidade = body["quantity_"]
 
-    try:
-        sell_product([(id, quantidade)])
-        return jsonify({ "produtoVendido": { "id": id, "quantidade": quantidade } })
-    except ValueError as e:
-        return jsonify({ "erro": str(e) }), 400
+#     try:
+#         sell_product([(id, quantidade)])
+#         return jsonify({ "produtoVendido": { "id": id, "quantidade": quantidade } })
+#     except ValueError as e:
+#         return jsonify({ "erro": str(e) }), 400
 
-# get all vendas
-@app.route('/vendas', methods=["GET"])
-@cross_origin()
-def get_vendas():
-    historico = load_sales_history()
-    return jsonify(historico)
-
+# # get all vendas
+# @app.route('/vendas', methods=["GET"])
+# @cross_origin()
+# def get_vendas():
+#     historico = load_sales_history()
+#     return jsonify(historico)
 
 app.run(port=8080, host='localhost', debug=True)

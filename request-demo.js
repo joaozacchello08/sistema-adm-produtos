@@ -115,4 +115,4 @@ function get_sales_history() {
         .catch(err => console.error("Erro ao obter histórico de vendas:", err))
 }
 
-
+get_product(1)
